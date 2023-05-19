@@ -4,6 +4,7 @@
 dist
 tmp
 /out-tsc
+/mongo-data-4.4
 
 # dependencies
 node_modules
