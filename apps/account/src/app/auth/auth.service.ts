@@ -23,27 +23,22 @@ export class AuthService {
       role: UserRole.Student,
       passwordHash: '',
     }).setPassword(password);
-    console.log('newUserEntity: ', newUserEntity);
     const newUser = await this.userRepository.createUser(newUserEntity);
-    return newUser;
+    return { email: newUser.email };
   }
 
   async login({ email, password }: LoginDto) {
-    const user = await this.userRepository.findById(email);
-    console.log('user: ', user);
+    const user = await this.userRepository.findUser(email);
     if (!user) {
       throw new Error('Неверный логин или пароль');
     }
-    console.log('here');
     const userEntity = new UserEntity(user);
-    console.log('here2');
-    console.log(userEntity);
     const isCorrectPassword = await userEntity.validatePassword(password);
     if (!isCorrectPassword) {
       throw new Error('Неверный логин или пароль');
     }
 
-    return { id: userEntity._id };
+    return { id: user._id };
   }
 
   async jwtAccess(id: string) {

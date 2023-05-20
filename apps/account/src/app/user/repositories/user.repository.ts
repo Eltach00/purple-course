@@ -10,15 +10,10 @@ export class UserRepository {
 
   async createUser(user: UserEntity) {
     const newUser = new this.userModel(user);
-    newUser.save();
-    return newUser;
+    return newUser.save();
   }
 
   async findUser(email: string) {
     return this.userModel.findOne({ email }).exec();
-  }
-
-  async findById(id: string) {
-    return this.userModel.findById(id).exec();
   }
 }
