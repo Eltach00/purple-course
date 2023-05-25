@@ -1,4 +1,4 @@
-version: '3'
+version: '3.1'
 services:
   mongo:
     image: mongo:4.4.4
@@ -11,3 +11,10 @@ services:
       - 27017:27017
     volumes:
       - ./mongo-data-4.4:/data/db
+    command: --wiredTigerCacheSizeGB 1.5
+  rmq:
+    image: rabbitmq:3-management
+    restart: always
+    ports:
+      - '15672:15672'
+      - '5672:5672'

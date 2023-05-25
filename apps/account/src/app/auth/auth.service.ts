@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { LoginDto, RegisterDto } from './auth.controller';
 import { UserRepository } from '../user/repositories/user.repository';
 import { UserRole } from '@purple-course/interfaces';
 import { UserEntity } from '../user/entities/user.entity';
 import { JwtService } from '@nestjs/jwt';
+import { AccountLogin, AccountRegister } from '@purple-course/contracts';
 
 @Injectable()
 export class AuthService {
@@ -12,7 +12,7 @@ export class AuthService {
     private readonly jwtService: JwtService
   ) {}
 
-  async register({ email, password, displayName }: RegisterDto) {
+  async register({ email, password, displayName }: AccountLogin.Request) {
     const oldUser = await this.userRepository.findUser(email);
     if (oldUser) {
       throw new Error('Такой пользователь уже регистрирован');
@@ -27,7 +27,7 @@ export class AuthService {
     return { email: newUser.email };
   }
 
-  async login({ email, password }: LoginDto) {
+  async login({ email, password }: AccountRegister.Request) {
     const user = await this.userRepository.findUser(email);
     if (!user) {
       throw new Error('Неверный логин или пароль');
