@@ -12,14 +12,13 @@ export class AuthService {
     private readonly jwtService: JwtService
   ) {}
 
-  async register({ email, password, displayName }: AccountLogin.Request) {
+  async register({ email, password }: AccountLogin.Request) {
     const oldUser = await this.userRepository.findUser(email);
     if (oldUser) {
       throw new Error('Такой пользователь уже регистрирован');
     }
     const newUserEntity = await new UserEntity({
       email,
-      displayName,
       role: UserRole.Student,
       passwordHash: '',
     }).setPassword(password);
