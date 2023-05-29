@@ -1,7 +1,8 @@
 import { IUser, UserRole } from '@purple-course/interfaces';
-import { Prop, SchemaFactory } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
+@Schema()
 export class UserModel extends Document implements IUser {
   @Prop()
   displayName?: string;
