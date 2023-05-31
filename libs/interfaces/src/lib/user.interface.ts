@@ -8,6 +8,7 @@ export interface IUser {
   passwordHash: string;
   role: UserRole;
   courses?: IUserCourses[];
+  displayname?: string;
 }
 
 export enum PurchaseState {

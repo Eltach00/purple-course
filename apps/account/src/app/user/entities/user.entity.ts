@@ -7,6 +7,7 @@ export class UserEntity implements IUser {
   passwordHash: string;
   role: UserRole;
   courses?: IUserCourses[];
+  displayname: string;
 
   constructor(user: IUser) {
     this.passwordHash = user.passwordHash;
@@ -14,6 +15,7 @@ export class UserEntity implements IUser {
     this.email = user.email;
     this.role = user.role;
     this.courses = user.courses;
+    this.displayname = user.displayname;
   }
 
   public async setPassword(password: string) {
@@ -24,5 +26,18 @@ export class UserEntity implements IUser {
 
   public validatePassword(password: string) {
     return compare(password, this.passwordHash);
+  }
+
+  public getPublicProfile() {
+    return {
+      email: this.email,
+      displayname: this.displayname,
+      role: this.role,
+    };
+  }
+
+  public updateProfile(displayname: string) {
+    this.displayname = displayname;
+    return this;
   }
 }
