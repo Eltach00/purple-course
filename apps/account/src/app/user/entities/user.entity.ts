@@ -1,4 +1,4 @@
-import { IUser, UserRole } from '@purple-course/interfaces';
+import { IUser, IUserCourses, UserRole } from '@purple-course/interfaces';
 import { compare, genSalt, hash } from 'bcryptjs';
 
 export class UserEntity implements IUser {
@@ -6,12 +6,14 @@ export class UserEntity implements IUser {
   email: string;
   passwordHash: string;
   role: UserRole;
+  courses?: IUserCourses[];
 
   constructor(user: IUser) {
     this.passwordHash = user.passwordHash;
     this._id = user._id;
     this.email = user.email;
     this.role = user.role;
+    this.courses = user.courses;
   }
 
   public async setPassword(password: string) {
