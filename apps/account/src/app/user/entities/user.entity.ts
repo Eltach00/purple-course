@@ -1,4 +1,6 @@
+import { AccountChangedCourse } from '@purple-course/contracts';
 import {
+  IDomainEvent,
   IUser,
   IUserCourses,
   PurchaseState,
@@ -13,6 +15,7 @@ export class UserEntity implements IUser {
   role: UserRole;
   courses?: IUserCourses[];
   displayname: string;
+  events: IDomainEvent[] = [];
 
   constructor(user: IUser) {
     this.passwordHash = user.passwordHash;
@@ -43,6 +46,10 @@ export class UserEntity implements IUser {
         return c;
       }
       return c;
+    });
+    this.events.push({
+      topic: AccountChangedCourse.topic,
+      data: { courseId, state, userId: this._id },
     });
     return this;
   }

@@ -10,6 +10,7 @@ import { UserRepository } from './repositories/user.repository';
 import { UserService } from './user.service';
 import { UserCommands } from './user.commands';
 import { UserQueries } from './user.querires';
+import { UserEventEmitter } from './user.event-emitter';
 
 @Module({
   imports: [
@@ -18,7 +19,7 @@ import { UserQueries } from './user.querires';
       { name: UserCourses.name, schema: userCoursesSchema },
     ]),
   ],
-  providers: [UserRepository, UserService],
+  providers: [UserRepository, UserService, UserEventEmitter],
   exports: [UserRepository],
   controllers: [UserCommands, UserQueries],
 })
